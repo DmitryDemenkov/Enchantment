@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 129191964}
   - component: {fileID: 129191963}
   - component: {fileID: 129191962}
-  - component: {fileID: 129191968}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -268,21 +267,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &129191968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129191961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e69b25f58ee26bd4aa927ac3fd0b80a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _weaponView: {fileID: 496450697}
-  _weaponCreationView: {fileID: 1432529726}
-  _enchancerTableView: {fileID: 1523065280}
 --- !u!1 &280928974
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,8 +304,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 658.75, y: 308.14}
-  m_SizeDelta: {x: 529.86, y: 135.72}
+  m_AnchoredPosition: {x: 566.74, y: 273.42972}
+  m_SizeDelta: {x: 345.85, y: 205.14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &280928976
 CanvasRenderer:
@@ -422,7 +406,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 125, y: 28.498209}
+  m_SizeDelta: {x: 509.86, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &338620227
 MonoBehaviour:
@@ -457,7 +441,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!222 &338620228
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -836,7 +820,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 125, y: 87.22179}
+  m_SizeDelta: {x: 509.86, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &923426271
 MonoBehaviour:
@@ -861,7 +845,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 30
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
@@ -871,7 +855,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enchantment result
+  m_Text: 'Enchantment result:'
 --- !u!222 &923426272
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1215,6 +1199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enchanceButton: {fileID: 1523065281}
+  _enchantmentResultText: {fileID: 338620227}
 --- !u!114 &1523065281
 MonoBehaviour:
   m_ObjectHideFlags: 0
