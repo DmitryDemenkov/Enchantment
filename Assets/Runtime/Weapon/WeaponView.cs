@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class WeaponView : MonoBehaviour
 {
@@ -11,10 +10,10 @@ public class WeaponView : MonoBehaviour
 
     private int _weaponlevel;
     private string _weaponType;
-    private Dictionary<string, int> _currentData;
+    private IReadOnlyDictionary<string, int> _currentData;
     private List<Text> _currentTexts = new List<Text>();
 
-    public void UpdateInformation(int level, string weaponType, Dictionary<string, int> newData)
+    public void UpdateInformation(int level, string weaponType, IReadOnlyDictionary<string, int> newData)
     {
         _currentData = newData;
         _weaponlevel = level;
@@ -23,7 +22,7 @@ public class WeaponView : MonoBehaviour
         CreateTable();
     }
 
-    private void ClearTable()
+    public void ClearTable()
     {
         foreach (Text textElement in _currentTexts)
         {
@@ -39,7 +38,7 @@ public class WeaponView : MonoBehaviour
 
         foreach (KeyValuePair<string, int> item in _currentData)
         {
-            CreateTableRow(item.Key, item.Value.ToString());            
+            CreateTableRow(item.Key, item.Value.ToString());
         }
     }
 

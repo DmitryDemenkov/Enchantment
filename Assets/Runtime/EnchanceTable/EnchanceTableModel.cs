@@ -9,24 +9,28 @@ public class EnchanceTableModel
     private WeaponModel _weapon;
     private ScrollModel _scroll;
 
-    public void Enchance()
+    public bool Enchance()
     {
-        if (TryingToEnchant(_weapon.Level))
+        if (_weapon == null || _weapon.Level >= 20)
+            return false;
+
+        WeaponModel newWapeon = null;
+
+        bool isEnchanted = TryingToEnchant(_weapon.Level + 1);
+        if (isEnchanted)
         {
             var newProperties = _scroll.Modify(_weapon.Properties);
-            WeaponModel newWapeon = _factory.CreateWeapon(_weapon.Type, _weapon.Level + 1, newProperties);
-            SetWeapon(newWapeon);
+            newWapeon = _factory.CreateWeapon(_weapon.Type, _weapon.Level + 1, newProperties);
         }
+
+        SetWeapon(newWapeon);
+        return isEnchanted;
     }
 
     private bool TryingToEnchant(int level)
     {
-        float chances = UnityEngine.Random.Range(0f, 1);
-        if (chances < _chances[level])
-        {
-            return true;
-        }
-        return false;
+        float chances = UnityEngine.Random.Range(0f, 1f);
+        return chances < _chances[level];
     }
 
     public void SetWeapon(WeaponModel weapon)
