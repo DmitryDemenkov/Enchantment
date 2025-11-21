@@ -8,11 +8,11 @@ public class WeaponModel
     private int _level;
     public int Level { get { return _level; } }
 
-    private Dictionary<string, int> _properties;
+    private IReadOnlyDictionary<string, int> _properties;
     public IReadOnlyDictionary<string, int> Properties { get { return _properties; } }
 
 
-    public WeaponModel(WeaponType weaponType, int weaponLevel, Dictionary<string, int> weaponProperties)
+    public WeaponModel(WeaponType weaponType, int weaponLevel, IReadOnlyDictionary<string, int> weaponProperties)
     {
         _type = weaponType;
         _level = weaponLevel;
