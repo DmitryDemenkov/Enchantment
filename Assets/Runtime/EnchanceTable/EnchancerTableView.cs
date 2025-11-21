@@ -28,4 +28,9 @@ public class EnchancerTableView : MonoBehaviour
             _enchantmentResultText.text = "Failure";
         }
     }
+
+    public void ClearResult()
+    {
+        _enchantmentResultText.text = "";
+    }
 }
