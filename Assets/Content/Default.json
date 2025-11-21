@@ -1,0 +1,17 @@
+{
+    "Sword": {
+        "distanceAttack": 0,
+        "meleeAttack": 10,
+        "magicAttack": 0
+    },
+    "Bow": {
+        "distanceAttack": 10,
+        "meleeAttack": 0,
+        "magicAttack": 0
+    },
+    "MagicStaff": {
+        "distanceAttack": 0,
+        "meleeAttack": 0,
+        "magicAttack": 10
+    }
+}
