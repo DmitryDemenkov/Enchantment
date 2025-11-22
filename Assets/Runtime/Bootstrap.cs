@@ -14,35 +14,24 @@ public class Bootstrap : MonoBehaviour
 
     private void Start()
     {
-        EnchanceTableModel enchanceTableModel = new EnchanceTableModel();
-        enchanceTableModel.SetChances(GetChances());
-        enchanceTableModel.SetScroll(new ScrollModel(GetScrollProperties()));
+        References references = LoadReferences();
 
-        WeaponCreationModel weaponCreationModel = new WeaponCreationModel(GetDefualtProperties(), new WeaponFactory());
+        ItemFactory itemFactory = new ItemFactory(references.GetDefaultStats());
+        EnchanceTableModel enchanceTableModel = new EnchanceTableModel();
+        enchanceTableModel.SetChances(references.GetChances());
+        enchanceTableModel.SetItems(references.GetIncreaseStats());
 
         _enchanceTablePresenter = new EnchanceTablePresenter(enchanceTableModel, _enchancerTableView, _weaponView);
-        _weaponCreationPresenter = new WeaponCreationPresenter(weaponCreationModel, _weaponCreationView, enchanceTableModel);
+        _weaponCreationPresenter = new WeaponCreationPresenter(itemFactory, _weaponCreationView, enchanceTableModel);
 
         _enchanceTablePresenter.Enable();
         _weaponCreationPresenter.Enable();
     }
 
-    private Dictionary<WeaponType, Dictionary<string, int>> GetDefualtProperties()
+    private References LoadReferences()
     {
-        string json = File.ReadAllText(Application.dataPath + "/Content/Default.json");
-        return JSON.Load(json).Make<Dictionary<WeaponType, Dictionary<string, int>>>();
-    }
-
-    private Dictionary<string, int> GetScrollProperties()
-    {
-        string json = File.ReadAllText(Application.dataPath + "/Content/Scroll.json");
-        return JSON.Load(json).Make<Dictionary<string, int>>();
-    }
-
-    private Dictionary<int, float> GetChances()
-    {
-        string json = File.ReadAllText(Application.dataPath + "/Content/Chances.json");
-        return JSON.Load(json).Make<Dictionary<int, float>>();
+        string json = File.ReadAllText(Application.dataPath + "\\Content\\Data\\references.json");
+        return JSON.Load(json).Make<References>();
     }
 
     private void OnDestroy()
