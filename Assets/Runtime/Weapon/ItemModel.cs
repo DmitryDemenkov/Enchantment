@@ -27,5 +27,6 @@ public class ItemModel
             modifyItemProperties[pair.Key] = modifyItemProperties.GetValueOrDefault(pair.Key) + pair.Value;
 
         _states = modifyItemProperties;
+        _level++;
     }
 }
