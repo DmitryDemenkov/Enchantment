@@ -19,7 +19,7 @@ public class ItemFactory
     public ItemModel CreateRandomItem()
     {
         var items = _items.Keys.ToArray();
-        string randomItems = items[Random.Range(0, items.Length - 1)];
+        string randomItems = items[Random.Range(0, items.Length)];
         return CreateItem(randomItems);
     }
 }
