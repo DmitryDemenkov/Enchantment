@@ -3,27 +3,23 @@ using System.Collections.Generic;
 
 public class EnchanceTableModel
 {
-    public event Action<WeaponModel> WeaponChanged;
-    private Dictionary<int, float> _chances;
-    private WeaponFactory _factory = new WeaponFactory();
-    private WeaponModel _weapon;
-    private ScrollModel _scroll;
+    public event Action<ItemModel> WeaponChanged;
+    private List<float> _chances;
+    private ItemModel _curentItem;
+    private Dictionary<string, Dictionary<string, int>> _items;
 
     public bool Enchance()
     {
-        if (_weapon == null || _weapon.Level >= 20)
+        if (_curentItem == null || _curentItem.Level >= 20)
             return false;
 
-        WeaponModel newWapeon = null;
-
-        bool isEnchanted = TryingToEnchant(_weapon.Level + 1);
+        bool isEnchanted = TryingToEnchant(_curentItem.Level + 1);
         if (isEnchanted)
         {
-            var newProperties = _scroll.Modify(_weapon.Properties);
-            newWapeon = _factory.CreateWeapon(_weapon.Type, _weapon.Level + 1, newProperties);
+            _curentItem.Modify(_items[_curentItem.Item]);
         }
 
-        SetWeapon(newWapeon);
+        SetCurentItem(_curentItem);
         return isEnchanted;
     }
 
@@ -33,18 +29,18 @@ public class EnchanceTableModel
         return chances < _chances[level];
     }
 
-    public void SetWeapon(WeaponModel weapon)
+    public void SetCurentItem(ItemModel curentItem)
     {
-        _weapon = weapon;
-        WeaponChanged?.Invoke(_weapon);
+        _curentItem = curentItem;
+        WeaponChanged?.Invoke(_curentItem);
     }
 
-    public void SetScroll(ScrollModel scroll)
+    public void SetItems(Dictionary<string, Dictionary<string, int>> items)
     {
-        _scroll = scroll;
+        _items = items;
     }
 
-    public void SetChances(Dictionary<int, float> chances)
+    public void SetChances(List<float> chances)
     {
         _chances = chances;
     }
