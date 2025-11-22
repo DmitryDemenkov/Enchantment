@@ -1,21 +1,21 @@
 public class WeaponCreationPresenter
 {
-    private WeaponCreationModel _weaponCreationModel;
+    private ItemFactory _factory;
     private WeaponCreationView _weaponCreationView;
 
     private EnchanceTableModel _enchanceTableModel;
 
-    public WeaponCreationPresenter(WeaponCreationModel weaponCreationModel, WeaponCreationView weaponCreationView, EnchanceTableModel enchanceTableModel)
+    public WeaponCreationPresenter(ItemFactory factory, WeaponCreationView weaponCreationView, EnchanceTableModel enchanceTableModel)
     {
-        _weaponCreationModel = weaponCreationModel;
+        _factory = factory;
         _weaponCreationView = weaponCreationView;
         _enchanceTableModel = enchanceTableModel;
     }
 
     private void OnCreationClicked()
     {
-        WeaponModel weapon = _weaponCreationModel.CreateRandomWeapon();
-        _enchanceTableModel.SetWeapon(weapon);
+        ItemModel item = _factory.CreateRandomItem();
+        _enchanceTableModel.SetCurentItem(item);
     }
 
     public void Enable()
