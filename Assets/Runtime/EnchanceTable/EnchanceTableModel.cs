@@ -14,10 +14,14 @@ public class EnchanceTableModel
         if (_curentItem == null || _curentItem.Level >= _maxLevel)
             return false;
 
-        bool isEnchanted = TryingToEnchant(_curentItem.Level + 1);
+        bool isEnchanted = TryingToEnchant(_curentItem.Level);
         if (isEnchanted)
         {
             _curentItem.Modify(_items[_curentItem.Item]);
+        }
+        else
+        {
+            _curentItem = null;
         }
 
         SetCurentItem(_curentItem);
