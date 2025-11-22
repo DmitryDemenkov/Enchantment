@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class EnchanceTableModel
 {
     public event Action<ItemModel> WeaponChanged;
-    private List<float> _chances;
+    private IReadOnlyList<float> _chances;
     private ItemModel _curentItem;
-    private Dictionary<string, Dictionary<string, int>> _items;
+    private IReadOnlyDictionary<string, IReadOnlyDictionary<string, int>> _items;
     private int _maxLevel;
 
     public bool Enchance()
@@ -36,12 +36,12 @@ public class EnchanceTableModel
         WeaponChanged?.Invoke(_curentItem);
     }
 
-    public void SetItems(Dictionary<string, Dictionary<string, int>> items)
+    public void SetItems(IReadOnlyDictionary<string, IReadOnlyDictionary<string, int>> items)
     {
         _items = items;
     }
 
-    public void SetChances(List<float> chances)
+    public void SetChances(IReadOnlyList<float> chances)
     {
         _chances = chances;
         _maxLevel = _chances.Count - 1; 
