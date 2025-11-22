@@ -1,0 +1,69 @@
+@startuml
+class ItemView <<View>>
+{
+    {method} UpdateInformation()
+}
+class ItemPresenter <<Presenter>>
+{
+    {method} Enable()
+    {method} Disable()
+}
+class ItemModel <<Model>>
+{
+    {field} int level
+    {field} string item
+    {field} Dictionary<string, int> states
+    {method} Modify()
+}
+
+class EnchantmentTableView <<View>>
+{
+    event EnchanceClicked
+    {method} ShowEnchanceResult()
+}
+class EnchantmentTablePresenter <<Presenter>>
+{
+    {method} OnEnchanceClicked()
+    {method} Enable()
+    {method} Disable()
+}
+class EnchantmentTableModel <<Model>>
+{
+    {field} ItemModel currentItem
+    {field}List<Double> chances
+    {field}Dictionary<string, Dictionary<string, int> increaseStats> items
+    {method} Enchance()
+}
+
+class ItemСreationView <<View>>
+{
+    event ItemСreationClicked
+}
+class ItemСreationPresenter <<Presenter>>
+{
+    {method} OnWeaponCreationClicked()
+    {method} Enable()
+    {method} Disable()
+}
+class ItemFactory <<Model>>
+{
+    {field}Dictionary<string, Dictionary<string, int> startStats> items
+    {method}CreateItem()
+}
+
+
+ItemPresenter --> ItemView
+ItemPresenter --> ItemModel
+
+EnchantmentTablePresenter --> EnchantmentTableView
+EnchantmentTablePresenter --> EnchantmentTableModel
+
+ItemСreationPresenter --> ItemСreationView
+ItemСreationPresenter --> ItemFactory
+ItemСreationPresenter --> EnchantmentTableModel
+
+ItemModel --o EnchantmentTableModel
+
+'hide <<View>>
+'hide <<Presenter>>
+@enduml
