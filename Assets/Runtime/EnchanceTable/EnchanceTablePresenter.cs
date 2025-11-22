@@ -4,7 +4,7 @@ public class EnchanceTablePresenter
     private EnchancerTableView _enchancerTableView;
 
     private WeaponView _weaponView;
-    private WeaponPresenter _weaponPresenter;
+    private ItemPresenter _weaponPresenter;
 
     public EnchanceTablePresenter(EnchanceTableModel enchanceTableModel, EnchancerTableView enchancerTableView, WeaponView weaponView)
     {
@@ -19,14 +19,14 @@ public class EnchanceTablePresenter
         _enchancerTableView.ShowEnchanceResult(isEnchanted);
     }
 
-    private void OnWeaponChanged(WeaponModel weapon)
+    private void OnItemChanged(ItemModel item)
     {
         DisableWeaponPresenter();
         _enchancerTableView.ClearResult();
 
-        if (weapon != null)
+        if (item != null)
         {
-            _weaponPresenter = new WeaponPresenter(weapon, _weaponView);
+            _weaponPresenter = new ItemPresenter(item, _weaponView);
             _weaponPresenter.Enable();
         }
     }
@@ -42,7 +42,7 @@ public class EnchanceTablePresenter
 
     public void Enable()
     {
-        _enchanceTableModel.WeaponChanged += OnWeaponChanged;
+        _enchanceTableModel.WeaponChanged += OnItemChanged;
         _enchancerTableView.AddEnchanceClickedListener(OnEnchanceClicked);
     }
 
@@ -51,6 +51,6 @@ public class EnchanceTablePresenter
         DisableWeaponPresenter();
 
         _enchancerTableView.RemoveEnchanceClickedListener(OnEnchanceClicked);
-        _enchanceTableModel.WeaponChanged -= OnWeaponChanged;
+        _enchanceTableModel.WeaponChanged -= OnItemChanged;
     }
 }
