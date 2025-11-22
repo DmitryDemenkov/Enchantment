@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ItemFactory
 {
-    private Dictionary<string, IReadOnlyDictionary<string, int>> _items;
+    private IReadOnlyDictionary<string, IReadOnlyDictionary<string, int>> _items;
 
-    public ItemFactory(Dictionary<string, IReadOnlyDictionary<string, int>> items)
+    public ItemFactory(IReadOnlyDictionary<string, IReadOnlyDictionary<string, int>> items)
     {
         _items = items;
     }

@@ -1,0 +1,62 @@
+{
+    "items": {
+        "bow": {
+            "start_stats": {
+                "distance_attack": 10,
+                "melee_attack": 5,
+                "magic_attack": 0
+            },
+            "increase_stats": {
+                "distance_attack": 3,
+                "melee_attack": 0,
+                "magic_attack": 0
+            }
+        },
+        "sword": {
+            "start_stats": {
+                "distance_attack": 0,
+                "melee_attack": 12,
+                "magic_attack": 4
+            },
+            "increase_stats": {
+                "distance_attack": 0,
+                "melee_attack": 5,
+                "magic_attack": 2
+            }
+        },
+        "magick_staff": {
+            "start_stats": {
+                "distance_attack": 0,
+                "melee_attack": 5,
+                "magic_attack": 11
+            },
+            "increase_stats": {
+                "distance_attack": 0,
+                "melee_attack": 0,
+                "magic_attack": 7
+            }
+        }
+    },
+    "chances": [
+        1,
+        1,
+        1,
+        0.6666,
+        0.4444,
+        0.2963,
+        0.1975,
+        0.1317,
+        0.0875,
+        0.0585,
+        0.039,
+        0.026,
+        0.0173,
+        0.0116,
+        0.0077,
+        0.0051,
+        0.0034,
+        0.0023,
+        0.0015,
+        0.001
+    ]
+}
