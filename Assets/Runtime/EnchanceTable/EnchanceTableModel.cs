@@ -7,10 +7,11 @@ public class EnchanceTableModel
     private List<float> _chances;
     private ItemModel _curentItem;
     private Dictionary<string, Dictionary<string, int>> _items;
+    private int _maxLevel;
 
     public bool Enchance()
     {
-        if (_curentItem == null || _curentItem.Level >= 20)
+        if (_curentItem == null || _curentItem.Level >= _maxLevel)
             return false;
 
         bool isEnchanted = TryingToEnchant(_curentItem.Level + 1);
@@ -43,5 +44,6 @@ public class EnchanceTableModel
     public void SetChances(List<float> chances)
     {
         _chances = chances;
+        _maxLevel = _chances.Count - 1; 
     }
 }
