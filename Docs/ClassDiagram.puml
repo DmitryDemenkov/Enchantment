@@ -62,7 +62,7 @@ ItemСreationPresenter --> ItemСreationView
 ItemСreationPresenter --> ItemFactory
 ItemСreationPresenter --> EnchantmentTableModel
 
-EnchantmentTableModel --o ItemModel
+EnchantmentTableModel o-- ItemModel
 
 'hide <<View>>
 'hide <<Presenter>>
