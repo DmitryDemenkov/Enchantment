@@ -71,8 +71,20 @@ namespace TinyJSON
 		}
 	}
 
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true)]
+    public class EncodeAlias : Attribute
+    {
+        public string Name { get; private set; }
 
-	[Obsolete( "Use the Exclude attribute instead." )]
+
+        public EncodeAlias(string name)
+        {
+            Name = name;
+        }
+    }
+
+
+    [Obsolete( "Use the Exclude attribute instead." )]
 	// ReSharper disable once UnusedMember.Global
 	public sealed class Skip : Exclude {}
 

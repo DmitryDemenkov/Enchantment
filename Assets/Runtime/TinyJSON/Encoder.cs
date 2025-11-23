@@ -13,6 +13,7 @@ namespace TinyJSON
 		static readonly Type includeAttrType = typeof(Include);
 		static readonly Type excludeAttrType = typeof(Exclude);
 		static readonly Type typeHintAttrType = typeof(TypeHint);
+        static readonly Type encodeAliasAttrType = typeof(EncodeAlias);
 
 		readonly StringBuilder builder;
 		readonly EncodeOptions options;
@@ -252,6 +253,7 @@ namespace TinyJSON
 			{
 				var shouldTypeHint = false;
 				var shouldEncode = field.IsPublic;
+                var fieldName = field.Name;
 				foreach (var attribute in field.GetCustomAttributes( true ))
 				{
 					if (excludeAttrType.IsInstanceOfType( attribute ))
@@ -268,12 +270,17 @@ namespace TinyJSON
 					{
 						shouldTypeHint = true;
 					}
+
+                    if (encodeAliasAttrType.IsInstanceOfType( attribute ))
+                    {
+                        fieldName = ((EncodeAlias)attribute).Name;
+                    }
 				}
 
 				if (shouldEncode)
 				{
 					AppendComma( firstItem );
-					EncodeString( field.Name );
+					EncodeString( fieldName );
 					AppendColon();
 					EncodeValue( field.GetValue( value ), shouldTypeHint );
 					firstItem = false;
@@ -286,6 +293,7 @@ namespace TinyJSON
 				{
 					var shouldTypeHint = false;
 					var shouldEncode = includePublicProperties;
+                    var propertyName = property.Name;
 
 					foreach (var attribute in property.GetCustomAttributes( true ))
 					{
@@ -303,12 +311,17 @@ namespace TinyJSON
 						{
 							shouldTypeHint = true;
 						}
-					}
+
+                        if (encodeAliasAttrType.IsInstanceOfType(attribute))
+                        {
+                            propertyName = ((EncodeAlias)attribute).Name;
+                        }
+                    }
 
 					if (shouldEncode)
 					{
 						AppendComma( firstItem );
-						EncodeString( property.Name );
+						EncodeString( propertyName );
 						AppendColon();
 						EncodeValue( property.GetValue( value, null ), shouldTypeHint );
 						firstItem = false;
