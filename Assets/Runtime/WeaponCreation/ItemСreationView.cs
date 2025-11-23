@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class WeaponCreationView : MonoBehaviour
+public class ItemСreationView : MonoBehaviour
 {
     [SerializeField] private Button _createButton;
 

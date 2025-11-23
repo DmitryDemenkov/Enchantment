@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-public class EnchanceTableModel
+public class EnchantmentTableModel
 {
-    public event Action<ItemModel> WeaponChanged;
+    public event Action<ItemModel> ItemChanged;
     private IReadOnlyList<float> _chances;
     private ItemModel _curentItem;
     private IReadOnlyDictionary<string, IReadOnlyDictionary<string, int>> _items;
@@ -37,7 +37,7 @@ public class EnchanceTableModel
     public void SetCurentItem(ItemModel curentItem)
     {
         _curentItem = curentItem;
-        WeaponChanged?.Invoke(_curentItem);
+        ItemChanged?.Invoke(_curentItem);
     }
 
     public void SetItems(IReadOnlyDictionary<string, IReadOnlyDictionary<string, int>> items)

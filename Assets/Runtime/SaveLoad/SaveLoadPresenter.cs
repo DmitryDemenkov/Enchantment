@@ -1,9 +1,9 @@
 public class SaveLoadPresenter
 {
-    private EnchanceTableModel _enchanceTableModel;
+    private EnchantmentTableModel _enchanceTableModel;
     private ItemFactory _itemFactory;
 
-    public SaveLoadPresenter(EnchanceTableModel enchanceTableModel, ItemFactory itemFactory)
+    public SaveLoadPresenter(EnchantmentTableModel enchanceTableModel, ItemFactory itemFactory)
     {
         _enchanceTableModel = enchanceTableModel;
         _itemFactory = itemFactory;
@@ -31,13 +31,13 @@ public class SaveLoadPresenter
 
     public void Enable()
     {
-        _enchanceTableModel.WeaponChanged += OnItemChanged;
+        _enchanceTableModel.ItemChanged += OnItemChanged;
 
         LoadPlayerData();
     }
 
     public void Disable()
     {
-        _enchanceTableModel.WeaponChanged -= OnItemChanged;
+        _enchanceTableModel.ItemChanged -= OnItemChanged;
     }
 }
