@@ -11,10 +11,11 @@ public class Bootstrap : MonoBehaviour
 
     private EnchanceTablePresenter _enchanceTablePresenter;
     private WeaponCreationPresenter _weaponCreationPresenter;
+    private SaveLoadPresenter _saveLoadPresenter;
 
     private void Start()
     {
-        References references = LoadReferences();
+        References references = DataLoader.LoadReferences();
 
         ItemFactory itemFactory = new ItemFactory(references.GetDefaultStats());
         EnchanceTableModel enchanceTableModel = new EnchanceTableModel();
@@ -23,19 +24,16 @@ public class Bootstrap : MonoBehaviour
 
         _enchanceTablePresenter = new EnchanceTablePresenter(enchanceTableModel, _enchancerTableView, _weaponView);
         _weaponCreationPresenter = new WeaponCreationPresenter(itemFactory, _weaponCreationView, enchanceTableModel);
+        _saveLoadPresenter = new SaveLoadPresenter(enchanceTableModel, itemFactory);
 
         _enchanceTablePresenter.Enable();
         _weaponCreationPresenter.Enable();
-    }
-
-    private References LoadReferences()
-    {
-        string json = File.ReadAllText(Application.dataPath + "\\Content\\Data\\references.json");
-        return JSON.Load(json).Make<References>();
+        _saveLoadPresenter.Enable();
     }
 
     private void OnDestroy()
     {
+        _saveLoadPresenter.Disable();
         _weaponCreationPresenter.Disable();
         _enchanceTablePresenter.Disable();
     }
