@@ -16,6 +16,11 @@ public class ItemFactory
         return new ItemModel(item, 0, _items[item]);
     }
 
+    public ItemModel CreateItem(ItemData itemData)
+    {
+        return new ItemModel(itemData.Item, itemData.Level, itemData.Stats);
+    }
+
     public ItemModel CreateRandomItem()
     {
         var items = _items.Keys.ToArray();
