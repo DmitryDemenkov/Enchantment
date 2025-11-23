@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class EnchancerTableView : MonoBehaviour
+public class EnchantmentTableView : MonoBehaviour
 {
     [SerializeField] private Button _enchanceButton;
     [SerializeField] private Text _enchantmentResultText;

@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 338620228}
   - component: {fileID: 338620227}
   m_Layer: 5
-  m_Name: ResoultText
+  m_Name: ResultText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -826,9 +826,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee52b1c0c4113b4288e6b2fb50a9d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponView: {fileID: 1729965862}
-  _enchancerTableView: {fileID: 1215250869}
-  _weaponCreationView: {fileID: 683208346}
+  _itemView: {fileID: 1729965862}
+  _enchantmentTableView: {fileID: 1215250872}
+  "_item\u0421reationView": {fileID: 683208346}
 --- !u!4 &1183134615
 Transform:
   m_ObjectHideFlags: 0
@@ -855,7 +855,7 @@ GameObject:
   - component: {fileID: 1215250868}
   - component: {fileID: 1215250871}
   - component: {fileID: 1215250870}
-  - component: {fileID: 1215250869}
+  - component: {fileID: 1215250872}
   m_Layer: 5
   m_Name: EnchantmentTable
   m_TagString: Untagged
@@ -885,20 +885,6 @@ RectTransform:
   m_AnchoredPosition: {x: 575, y: -145}
   m_SizeDelta: {x: 1150, y: 850}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1215250869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1215250867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29bc3574b96a78843bf0822ece02ab3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enchanceButton: {fileID: 1523065281}
-  _enchantmentResultText: {fileID: 338620227}
 --- !u!114 &1215250870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -937,6 +923,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215250867}
   m_CullTransparentMesh: 1
+--- !u!114 &1215250872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215250867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33e2bbcae8fe56d4c8c1de647afaf43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enchanceButton: {fileID: 1523065281}
+  _enchantmentResultText: {fileID: 338620227}
 --- !u!1 &1221331364
 GameObject:
   m_ObjectHideFlags: 0

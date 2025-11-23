@@ -3,25 +3,25 @@ using System;
 public class ItemPresenter
 {
     private ItemModel _itemModel;
-    private WeaponView _weaponView;
+    private ItemView _itemView;
 
-    public ItemPresenter(ItemModel model, WeaponView view)
+    public ItemPresenter(ItemModel model, ItemView view)
     {
         _itemModel = model;
-        _weaponView = view;
+        _itemView = view;
     }
 
     public void Enable()
     {
         int level = _itemModel.Level;
-        string weaponType = _itemModel.Item;
+        string itemType = _itemModel.Item;
         var properties = _itemModel.States;
 
-        _weaponView.UpdateInformation(level, weaponType, properties);
+        _itemView.UpdateInformation(level, itemType, properties);
     }
 
     public void Disable()
     {
-        _weaponView.ClearTable();
+        _itemView.ClearTable();
     }
 }

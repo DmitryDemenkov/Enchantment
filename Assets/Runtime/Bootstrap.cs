@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class Bootstrap : MonoBehaviour
 {
-    [SerializeField] private WeaponView _weaponView;
-    [SerializeField] private EnchancerTableView _enchancerTableView;
-    [SerializeField] private WeaponCreationView _weaponCreationView;
+    [SerializeField] private ItemView _itemView;
+    [SerializeField] private EnchantmentTableView _enchantmentTableView;
+    [SerializeField] private ItemСreationView _itemСreationView;
 
-    private EnchanceTablePresenter _enchanceTablePresenter;
-    private WeaponCreationPresenter _weaponCreationPresenter;
+    private EnchantmentTablePresenter _enchantmentTablePresenter;
+    private ItemСreationPresenter _itemСreationPresenter;
     private SaveLoadPresenter _saveLoadPresenter;
 
     private void Start()
@@ -18,23 +18,23 @@ public class Bootstrap : MonoBehaviour
         References references = DataLoader.LoadReferences();
 
         ItemFactory itemFactory = new ItemFactory(references.GetDefaultStats());
-        EnchanceTableModel enchanceTableModel = new EnchanceTableModel();
-        enchanceTableModel.SetChances(references.GetChances());
-        enchanceTableModel.SetItems(references.GetIncreaseStats());
+        EnchantmentTableModel enchantmentTableModel = new EnchantmentTableModel();
+        enchantmentTableModel.SetChances(references.GetChances());
+        enchantmentTableModel.SetItems(references.GetIncreaseStats());
 
-        _enchanceTablePresenter = new EnchanceTablePresenter(enchanceTableModel, _enchancerTableView, _weaponView);
-        _weaponCreationPresenter = new WeaponCreationPresenter(itemFactory, _weaponCreationView, enchanceTableModel);
-        _saveLoadPresenter = new SaveLoadPresenter(enchanceTableModel, itemFactory);
+        _enchantmentTablePresenter = new EnchantmentTablePresenter(enchantmentTableModel, _enchantmentTableView, _itemView);
+        _itemСreationPresenter = new ItemСreationPresenter(itemFactory, _itemСreationView, enchantmentTableModel);
+        _saveLoadPresenter = new SaveLoadPresenter(enchantmentTableModel, itemFactory);
 
-        _enchanceTablePresenter.Enable();
-        _weaponCreationPresenter.Enable();
+        _enchantmentTablePresenter.Enable();
+        _itemСreationPresenter.Enable();
         _saveLoadPresenter.Enable();
     }
 
     private void OnDestroy()
     {
         _saveLoadPresenter.Disable();
-        _weaponCreationPresenter.Disable();
-        _enchanceTablePresenter.Disable();
+        _itemСreationPresenter.Disable();
+        _enchantmentTablePresenter.Disable();
     }
 }
