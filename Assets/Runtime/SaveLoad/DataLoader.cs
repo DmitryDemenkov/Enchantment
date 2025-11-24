@@ -18,7 +18,7 @@ public static class DataLoader
 
     public static PlayerData LoadPlayerData()
     {
-        PlayerData playerData = null;
+        PlayerData playerData = new PlayerData();
 
         string path = DataPath() + "\\player.json";
         if (File.Exists(path))
@@ -33,15 +33,7 @@ public static class DataLoader
     public static void SavePlayerData(PlayerData playerData)
     {
         string path = DataPath() + "\\player.json";
-
-        if (playerData.CurrentItem == null)
-        {
-            File.Delete(path);
-        }
-        else
-        {
-            string json = JSON.Dump(playerData, EncodeOptions.NoTypeHints);
-            File.WriteAllText(path, json);
-        }
+        string json = JSON.Dump(playerData, EncodeOptions.NoTypeHints);
+        File.WriteAllText(path, json);
     }
 }
