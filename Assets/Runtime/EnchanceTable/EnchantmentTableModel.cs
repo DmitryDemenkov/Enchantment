@@ -4,28 +4,41 @@ using System.Collections.Generic;
 public class EnchantmentTableModel
 {
     public event Action<ItemModel> ItemChanged;
+    public event Action<EnchantmentResult> Enchanted;
+
     private IReadOnlyList<float> _chances;
-    private ItemModel _curentItem;
     private IReadOnlyDictionary<string, IReadOnlyDictionary<string, int>> _items;
+
     private int _maxLevel;
 
-    public bool Enchance()
+    private ItemModel _curentItem;
+    public ItemModel CurrentItem { get { return _curentItem; } }
+
+    public void Enchance()
     {
-        if (_curentItem == null || _curentItem.Level >= _maxLevel)
-            return false;
+        if (_curentItem == null)
+        {
+            Enchanted?.Invoke(EnchantmentResult.FAILURE);
+            return;
+        }
+
+        if (_curentItem.Level >= _maxLevel)
+        {
+            Enchanted?.Invoke(EnchantmentResult.MAXLEVEL);
+            return;
+        }
 
         bool isEnchanted = TryingToEnchant(_curentItem.Level);
         if (isEnchanted)
         {
             _curentItem.Modify(_items[_curentItem.Item]);
+            Enchanted?.Invoke(EnchantmentResult.SUCCESS);
         }
         else
         {
-            _curentItem = null;
+            SetCurentItem(null);
+            Enchanted?.Invoke(EnchantmentResult.FAILURE);
         }
-
-        SetCurentItem(_curentItem);
-        return isEnchanted;
     }
 
     private bool TryingToEnchant(int level)
@@ -48,6 +61,6 @@ public class EnchantmentTableModel
     public void SetChances(IReadOnlyList<float> chances)
     {
         _chances = chances;
-        _maxLevel = _chances.Count - 1; 
+        _maxLevel = _chances.Count; 
     }
 }

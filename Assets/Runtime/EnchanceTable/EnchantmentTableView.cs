@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -17,16 +18,10 @@ public class EnchantmentTableView : MonoBehaviour
         _enchanceButton.onClick.RemoveListener(enchanceClicked);
     }
 
-    public void ShowEnchanceResult(bool result)
+    public void ShowEnchanceResult(EnchantmentResult result)
     {
-        if (result)
-        {
-            _enchantmentResultText.text = "Success";
-        }
-        else
-        {
-            _enchantmentResultText.text = "Failure";
-        }
+        string resultText = Enum.GetName(typeof(EnchantmentResult), result);
+        _enchantmentResultText.text = resultText;
     }
 
     public void ClearResult()

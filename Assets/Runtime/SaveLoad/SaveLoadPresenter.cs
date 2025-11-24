@@ -9,8 +9,19 @@ public class SaveLoadPresenter
         _itemFactory = itemFactory;
     }
 
+    private void OnEnchanted(EnchantmentResult result)
+    {
+        SavePlayerData();
+    }
+
     private void OnItemChanged(ItemModel itemModel)
     {
+        SavePlayerData();
+    }
+
+    private void SavePlayerData()
+    {
+        ItemModel itemModel = _enchanceTableModel.CurrentItem;
         PlayerData playerData = new PlayerData();
         if (itemModel != null)
         {
@@ -22,7 +33,7 @@ public class SaveLoadPresenter
     private void LoadPlayerData()
     {
         PlayerData playerData = DataLoader.LoadPlayerData();
-        if (playerData != null)
+        if (playerData.CurrentItem != null)
         {
             ItemModel itemModel = _itemFactory.CreateItem(playerData.CurrentItem);
             _enchanceTableModel.SetCurentItem(itemModel);
@@ -31,13 +42,15 @@ public class SaveLoadPresenter
 
     public void Enable()
     {
-        _enchanceTableModel.ItemChanged += OnItemChanged;
-
         LoadPlayerData();
+
+        _enchanceTableModel.Enchanted += OnEnchanted;
+        _enchanceTableModel.ItemChanged += OnItemChanged;
     }
 
     public void Disable()
     {
         _enchanceTableModel.ItemChanged -= OnItemChanged;
+        _enchanceTableModel.Enchanted -= OnEnchanted;
     }
 }

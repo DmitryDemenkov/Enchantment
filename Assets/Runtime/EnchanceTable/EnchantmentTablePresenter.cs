@@ -15,8 +15,12 @@ public class EnchantmentTablePresenter
 
     private void OnEnchanceClicked()
     {
-        bool isEnchanted = _enchantmentTableModel.Enchance();
-        _enchantmentTableView.ShowEnchanceResult(isEnchanted);
+        _enchantmentTableModel.Enchance();
+    }
+
+    private void OnEnchanted(EnchantmentResult result)
+    {
+        _enchantmentTableView.ShowEnchanceResult(result);
     }
 
     private void OnItemChanged(ItemModel item)
@@ -43,6 +47,7 @@ public class EnchantmentTablePresenter
     public void Enable()
     {
         _enchantmentTableModel.ItemChanged += OnItemChanged;
+        _enchantmentTableModel.Enchanted += OnEnchanted;
         _enchantmentTableView.AddEnchanceClickedListener(OnEnchanceClicked);
     }
 
@@ -51,6 +56,7 @@ public class EnchantmentTablePresenter
         DisableItemPresenter();
 
         _enchantmentTableView.RemoveEnchanceClickedListener(OnEnchanceClicked);
+        _enchantmentTableModel.Enchanted -= OnEnchanted;
         _enchantmentTableModel.ItemChanged -= OnItemChanged;
     }
 }
