@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 public class ItemModel
 {
+    public event Action StatsChanged;
+
     private string _item;
     public string Item { get { return _item; } }
 
@@ -28,5 +31,7 @@ public class ItemModel
 
         _states = modifyItemProperties;
         _level++;
+
+        StatsChanged?.Invoke();
     }
 }

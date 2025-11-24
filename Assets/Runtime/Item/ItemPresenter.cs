@@ -1,5 +1,3 @@
-using System;
-
 public class ItemPresenter
 {
     private ItemModel _itemModel;
@@ -11,7 +9,7 @@ public class ItemPresenter
         _itemView = view;
     }
 
-    public void Enable()
+    private void OnItemStatsChanged()
     {
         int level = _itemModel.Level;
         string itemType = _itemModel.Item;
@@ -20,8 +18,16 @@ public class ItemPresenter
         _itemView.UpdateInformation(level, itemType, properties);
     }
 
+    public void Enable()
+    {
+        _itemModel.StatsChanged += OnItemStatsChanged;
+
+        OnItemStatsChanged();
+    }
+
     public void Disable()
     {
+        _itemModel.StatsChanged -= OnItemStatsChanged;
         _itemView.ClearTable();
     }
 }
