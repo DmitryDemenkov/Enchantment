@@ -13,7 +13,7 @@ public class ItemPresenter
     {
         int level = _itemModel.Level;
         string itemType = _itemModel.Item;
-        var properties = _itemModel.States;
+        var properties = _itemModel.Stats;
 
         _itemView.UpdateInformation(level, itemType, properties);
     }
