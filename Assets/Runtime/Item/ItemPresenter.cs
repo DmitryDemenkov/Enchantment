@@ -12,22 +12,18 @@ public class ItemPresenter
     private void OnItemStatsChanged()
     {
         int level = _itemModel.Level;
-        string itemType = _itemModel.Item;
+        string itemId = _itemModel.Item.Id;
         var properties = _itemModel.Stats;
-
-        _itemView.UpdateInformation(level, itemType, properties);
     }
 
     public void Enable()
     {
-        _itemModel.StatsChanged += OnItemStatsChanged;
 
         OnItemStatsChanged();
     }
 
     public void Disable()
     {
-        _itemModel.StatsChanged -= OnItemStatsChanged;
         _itemView.ClearTable();
     }
 }

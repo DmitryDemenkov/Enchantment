@@ -1,21 +1,35 @@
 public class EnchantmentTablePresenter
 {
-    private EnchantmentTableModel _enchantmentTableModel;
+    private CurrentItemModel _currentItem;
     private EnchantmentTableView _enchantmentTableView;
 
     private ItemView _itemView;
     private ItemPresenter _itemPresenter;
 
-    public EnchantmentTablePresenter(EnchantmentTableModel enchantmentTableModel, EnchantmentTableView enchantmentTableView, ItemView itemView)
+    public EnchantmentTablePresenter(CurrentItemModel currentItem, EnchantmentTableView enchantmentTableView, ItemView itemView)
     {
-        _enchantmentTableModel = enchantmentTableModel;
+        _currentItem = currentItem;
         _enchantmentTableView = enchantmentTableView;
         _itemView = itemView;
     }
 
+    public void Enable()
+    {
+        _currentItem.Changed += OnItemChanged;
+        _enchantmentTableView.AddEnchanceClickedListener(OnEnchanceClicked);
+    }
+
+    public void Disable()
+    {
+        DisableItemPresenter();
+
+        _enchantmentTableView.RemoveEnchanceClickedListener(OnEnchanceClicked);
+        _currentItem.Changed -= OnItemChanged;
+    }
+
     private void OnEnchanceClicked()
     {
-        _enchantmentTableModel.Enchance();
+        
     }
 
     private void OnEnchanted(EnchantmentResult result)
@@ -42,21 +56,5 @@ public class EnchantmentTablePresenter
             _itemPresenter.Disable();
         }
         _itemPresenter = null;
-    }
-
-    public void Enable()
-    {
-        _enchantmentTableModel.ItemChanged += OnItemChanged;
-        _enchantmentTableModel.Enchanted += OnEnchanted;
-        _enchantmentTableView.AddEnchanceClickedListener(OnEnchanceClicked);
-    }
-
-    public void Disable()
-    {
-        DisableItemPresenter();
-
-        _enchantmentTableView.RemoveEnchanceClickedListener(OnEnchanceClicked);
-        _enchantmentTableModel.Enchanted -= OnEnchanted;
-        _enchantmentTableModel.ItemChanged -= OnItemChanged;
     }
 }

@@ -9,28 +9,32 @@ public static class DataLoader
         return Application.dataPath + "\\Content\\Data";
     }
 
-    public static References LoadReferences()
+    public static Descriptions LoadReferences(out Variant variant)
     {
         string path = DataPath() + "\\references.json";
         string json = File.ReadAllText(path);
-        return JSON.Load(json).Make<References>();
+
+        variant = JSON.Load(json);
+
+
+        return new Descriptions(variant);
     }
 
-    public static PlayerData LoadPlayerData()
+    public static PlayerModel LoadPlayerData()
     {
-        PlayerData playerData = new PlayerData();
+        PlayerModel player = new PlayerModel();
 
         string path = DataPath() + "\\player.json";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            playerData = JSON.Load(json).Make<PlayerData>();
+            player = new PlayerModel(JSON.Load(json), LoadReferences(out Variant variant));
         }
 
-        return playerData;
+        return player;
     }
 
-    public static void SavePlayerData(PlayerData playerData)
+    public static void SavePlayerData(PlayerModel playerData)
     {
         string path = DataPath() + "\\player.json";
         string json = JSON.Dump(playerData, EncodeOptions.NoTypeHints);

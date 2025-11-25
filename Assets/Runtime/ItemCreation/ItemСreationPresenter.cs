@@ -1,21 +1,17 @@
 public class ItemСreationPresenter
 {
-    private ItemFactory _factory;
     private ItemСreationView _itemCreationView;
+    private CurrentItemModel _currentItem;
 
-    private EnchantmentTableModel _enchantmentTableModel;
-
-    public ItemСreationPresenter(ItemFactory factory, ItemСreationView itemCreationView, EnchantmentTableModel enchantmentTableModel)
+    public ItemСreationPresenter(ItemСreationView itemCreationView, CurrentItemModel currentItem)
     {
-        _factory = factory;
         _itemCreationView = itemCreationView;
-        _enchantmentTableModel = enchantmentTableModel;
+        _currentItem = currentItem;
     }
 
     private void OnCreationClicked()
     {
-        ItemModel item = _factory.CreateRandomItem();
-        _enchantmentTableModel.SetCurentItem(item);
+        _currentItem.Change();        
     }
 
     public void Enable()
