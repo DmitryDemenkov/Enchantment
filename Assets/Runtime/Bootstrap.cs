@@ -11,29 +11,26 @@ public class Bootstrap : MonoBehaviour
 
     private EnchantmentTablePresenter _enchantmentTablePresenter;
     private ItemСreationPresenter _itemСreationPresenter;
-    private SaveLoadPresenter _saveLoadPresenter;
+    private SaveStep _saveStep;
+    private LoadStep _loadStep;
 
     private void Start()
     {
-        References references = DataLoader.LoadReferences();
+        _loadStep = new LoadStep();
+        PlayerModel playerModel = _loadStep.LoadPlayerData();
 
-        ItemFactory itemFactory = new ItemFactory(references.GetDefaultStats());
-        EnchantmentTableModel enchantmentTableModel = new EnchantmentTableModel();
-        enchantmentTableModel.SetChances(references.GetChances());
-        enchantmentTableModel.SetItems(references.GetIncreaseStats());
-
-        _enchantmentTablePresenter = new EnchantmentTablePresenter(enchantmentTableModel, _enchantmentTableView, _itemView);
-        _itemСreationPresenter = new ItemСreationPresenter(itemFactory, _itemСreationView, enchantmentTableModel);
-        _saveLoadPresenter = new SaveLoadPresenter(enchantmentTableModel, itemFactory);
+        _enchantmentTablePresenter = new EnchantmentTablePresenter(playerModel.CurrentItem, _enchantmentTableView, _itemView);
+        _itemСreationPresenter = new ItemСreationPresenter(_itemСreationView, playerModel.CurrentItem);
+        _saveStep = new SaveStep(playerModel);
 
         _enchantmentTablePresenter.Enable();
         _itemСreationPresenter.Enable();
-        _saveLoadPresenter.Enable();
     }
 
     private void OnDestroy()
     {
-        _saveLoadPresenter.Disable();
+        //_saveStep.SavePlayerData();
+
         _itemСreationPresenter.Disable();
         _enchantmentTablePresenter.Disable();
     }
