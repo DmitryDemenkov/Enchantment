@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using TinyJSON;
 
 public class ItemModel
 {
+    public event Action<int> LevelChanged;
+
     [Include][DecodeAlias("item")][EncodeAlias("item")]
     public ItemDescription Item { get; private set; }
 
@@ -37,5 +40,17 @@ public class ItemModel
         {
             Stats.Add(statDescription.Id, new StatModel(statDescription.Id, statDescription.Value));
         }
+    }
+
+    public void Enchance()
+    {
+        var increaseStats = Item.IncreaseStats;
+        foreach (var stat in increaseStats)
+        {
+            Stats[stat.Id].Add(stat.Value);
+        }
+
+        Level++;
+        LevelChanged?.Invoke(Level);
     }
 }

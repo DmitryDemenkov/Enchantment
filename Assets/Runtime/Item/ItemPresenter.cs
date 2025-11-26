@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class ItemPresenter
 {
     private ItemModel _itemModel;
@@ -9,21 +11,22 @@ public class ItemPresenter
         _itemView = view;
     }
 
-    private void OnItemStatsChanged()
+    private void OnItemStatsChanged(int level)
     {
-        int level = _itemModel.Level;
-        string itemId = _itemModel.Item.Id;
-        var properties = _itemModel.Stats;
+        Debug.Log(level);
     }
 
     public void Enable()
     {
+        _itemModel.LevelChanged += OnItemStatsChanged;
 
-        OnItemStatsChanged();
+        OnItemStatsChanged(_itemModel.Level);
     }
 
     public void Disable()
     {
         _itemView.ClearTable();
+
+        _itemModel.LevelChanged -= OnItemStatsChanged;
     }
 }

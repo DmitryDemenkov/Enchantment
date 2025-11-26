@@ -16,6 +16,7 @@ public class EnchantmentTablePresenter
     public void Enable()
     {
         _currentItem.Changed += OnItemChanged;
+        _currentItem.Enchanted += OnEnchanted;
         _enchantmentTableView.AddEnchanceClickedListener(OnEnchanceClicked);
     }
 
@@ -24,12 +25,13 @@ public class EnchantmentTablePresenter
         DisableItemPresenter();
 
         _enchantmentTableView.RemoveEnchanceClickedListener(OnEnchanceClicked);
+        _currentItem.Enchanted -= OnEnchanted;
         _currentItem.Changed -= OnItemChanged;
     }
 
     private void OnEnchanceClicked()
     {
-        
+        _currentItem.Enchance();
     }
 
     private void OnEnchanted(EnchantmentResult result)

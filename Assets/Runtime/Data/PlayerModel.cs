@@ -6,7 +6,7 @@ public class PlayerModel
 
     public PlayerModel(Variant variant, Descriptions descriptions)
     {
-        CurrentItem = new CurrentItemModel(variant["current_item"], descriptions.Items);
+        CurrentItem = new CurrentItemModel(variant["current_item"], descriptions);
     }
 
     public PlayerModel()
