@@ -92,7 +92,7 @@ MonoBehaviour:
   m_CellSize: {x: 310, y: 70}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
-  m_ConstraintCount: 2
+  m_ConstraintCount: 1
 --- !u!114 &1198101850016034606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,8 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tableLayoutGroup: {fileID: 1078921681911225127}
-  _nameTextPrefab: {fileID: 5910229332476347148, guid: 2cf4daf83adbb1e42b94663ac8b857a2, type: 3}
-  _valueTextPrefab: {fileID: 6404261675241284656, guid: bd3aa879fd57dea449bac6c609885539, type: 3}
+  _statViewPrefab: {fileID: 7896151073986817814, guid: 7381f058ab6652d46a8e874878e28ff2, type: 3}
 --- !u!222 &2306677593551454216
 CanvasRenderer:
   m_ObjectHideFlags: 0
