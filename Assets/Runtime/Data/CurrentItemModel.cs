@@ -11,11 +11,14 @@ public class CurrentItemModel
     public ItemModel Current { get; private set; }
 
     private ItemDescriptionCollection _itemDescriptionCollection;
-    private List<float> _chances; 
+    private List<float> _chances;
 
-    public CurrentItemModel(Variant variant, Descriptions descriptions)
+    private SeedModelCollection _seedsModelCollection;
+
+    public CurrentItemModel(Variant variant, Descriptions descriptions, SeedModelCollection seeds)
     {
         _chances = descriptions.Chances;
+        _seedsModelCollection = seeds;
         _itemDescriptionCollection = descriptions.Items;
         Current = new ItemModel(variant, _itemDescriptionCollection);
     }
@@ -27,8 +30,10 @@ public class CurrentItemModel
 
     public void Change()
     {
-        int randomIndex = UnityEngine.Random.Range(0, _itemDescriptionCollection.Items.Count);
-        //TODO: change random
+        var seed = _seedsModelCollection.Seeds["seed1"].IncrementSeed(); // ID сида поменять
+        var random = new Random(seed);
+        
+        int randomIndex = random.Range(0, _itemDescriptionCollection.Items.Count);
         var itemDescription = _itemDescriptionCollection.Items.ElementAt(randomIndex).Value;
 
         Current = new ItemModel(itemDescription);
@@ -49,7 +54,10 @@ public class CurrentItemModel
             return;
         }
 
-        float chance = UnityEngine.Random.Range(0f, 1f);
+        var seed = _seedsModelCollection.Seeds["seed2"].IncrementSeed(); // ID сида поменять
+        var random = new Random(seed);
+
+        double chance = random.Chance();
         if (chance < _chances[Current.Level])
         {
             Current.Enchance();
