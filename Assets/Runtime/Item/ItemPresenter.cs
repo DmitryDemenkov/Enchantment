@@ -1,9 +1,10 @@
-using UnityEngine;
+using System.Collections.Generic;
 
 public class ItemPresenter
 {
     private ItemModel _itemModel;
     private ItemView _itemView;
+    private List<StatPresenter> _statPresenters = new List<StatPresenter>();
 
     public ItemPresenter(ItemModel model, ItemView view)
     {
@@ -11,22 +12,36 @@ public class ItemPresenter
         _itemView = view;
     }
 
-    private void OnItemStatsChanged(int level)
+    private void OnItemLevelChanged(int level)
     {
-        Debug.Log(level);
+        _itemView.UpdateLevel(level);
     }
 
     public void Enable()
     {
-        _itemModel.LevelChanged += OnItemStatsChanged;
+        _itemModel.LevelChanged += OnItemLevelChanged;
 
-        OnItemStatsChanged(_itemModel.Level);
+        _itemView.UpdateInformation(_itemModel.Level, _itemModel.Item.Id);
+
+        foreach (var pair in _itemModel.Stats)
+        {
+            StatView statView = _itemView.CreateStatView();
+            var statPresenter = new StatPresenter(pair.Value, statView);
+            statPresenter.Enable();
+            _statPresenters.Add(statPresenter);
+        }
     }
 
     public void Disable()
     {
-        _itemView.ClearTable();
+        foreach (var statPresenter in _statPresenters)
+        {
+            statPresenter.Disable();
+        }
+        _statPresenters.Clear();
 
-        _itemModel.LevelChanged -= OnItemStatsChanged;
+        _itemModel.LevelChanged -= OnItemLevelChanged;
+
+        _itemView.Destroy();
     }
 }

@@ -1,55 +1,32 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemView : MonoBehaviour
 {
     [SerializeField] private GridLayoutGroup _tableLayoutGroup;
-    [SerializeField] private Text _nameTextPrefab;
-    [SerializeField] private Text _valueTextPrefab;
+    [SerializeField] private StatView _statViewPrefab;
+    [SerializeField] private Text _typeTextPrefab;
+    [SerializeField] private Text _levelTextPrefab;
 
-    private int _level;
-    private string _type;
-    private IReadOnlyDictionary<string, int> _currentData;
-    private List<Text> _currentTexts = new List<Text>();
-
-    public void UpdateInformation(int level, string type, IReadOnlyDictionary<string, int> newData)
+    public void UpdateInformation(int level, string type)
     {
-        _currentData = newData;
-        _level = level;
-        _type = type;
-        ClearTable();
-        CreateTable();
+        UpdateLevel(level);
+        _typeTextPrefab.text = type;
     }
 
-    public void ClearTable()
+    public void UpdateLevel(int level)
     {
-        foreach (Text textElement in _currentTexts)
-        {
-            if (textElement != null) Destroy(textElement.gameObject);
-        }
-        _currentTexts.Clear();
+        _levelTextPrefab.text = level.ToString();
     }
 
-    private void CreateTable()
+    public void Destroy()
     {
-        CreateTableRow("Тип", _type);
-        CreateTableRow("Уровень", _level.ToString());
-
-        foreach (KeyValuePair<string, int> item in _currentData)
-        {
-            CreateTableRow(item.Key, item.Value.ToString());
-        }
+        Destroy(gameObject);
     }
 
-    private void CreateTableRow(string name, string value)
+    public StatView CreateStatView()
     {
-        Text nameText = Instantiate(_nameTextPrefab, _tableLayoutGroup.transform);
-        nameText.text = name;
-        _currentTexts.Add(nameText);
-
-        Text valueText = Instantiate(_valueTextPrefab, _tableLayoutGroup.transform);
-        valueText.text = value;
-        _currentTexts.Add(valueText);
+        StatView statView = Instantiate(_statViewPrefab, _tableLayoutGroup.transform);
+        return statView;
     }
 }
