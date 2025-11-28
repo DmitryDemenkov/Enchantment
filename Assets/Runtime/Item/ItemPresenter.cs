@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class ItemPresenter
 {
@@ -41,8 +40,8 @@ public class ItemPresenter
         }
         _statPresenters.Clear();
 
-        _itemView.ClearTable();
-
         _itemModel.LevelChanged -= OnItemLevelChanged;
+
+        _itemView.Destroy();
     }
 }

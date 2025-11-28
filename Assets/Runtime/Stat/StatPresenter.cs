@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 public class StatPresenter
 {
     private readonly StatModel _statModel;
@@ -22,6 +20,7 @@ public class StatPresenter
     public void Disable()
     {
         _statModel.Changed -= OnStatChanged;
+        _statView.Destroy();
     }
 
     private void OnStatChanged(int value)

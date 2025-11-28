@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,34 +5,23 @@ public class ItemView : MonoBehaviour
 {
     [SerializeField] private GridLayoutGroup _tableLayoutGroup;
     [SerializeField] private StatView _statViewPrefab;
-
-    private StatView _levelRow;
+    [SerializeField] private Text _typeTextPrefab;
+    [SerializeField] private Text _levelTextPrefab;
 
     public void UpdateInformation(int level, string type)
     {
-        ClearTable();
-
-        StatView typeRow = CreateStatView();
-        typeRow.SetName("type");
-        typeRow.SetValue(type);
-
-        _levelRow = CreateStatView();
-        _levelRow.SetName("level");
-        _levelRow.SetValue(level);
-    }
-
-    public void ClearTable()
-    {
-        foreach (Transform child in _tableLayoutGroup.transform)
-        {
-            Destroy(child.gameObject);
-        }
-        _levelRow = null;
+        UpdateLevel(level);
+        _typeTextPrefab.text = type;
     }
 
     public void UpdateLevel(int level)
     {
-        _levelRow.SetValue(level);
+        _levelTextPrefab.text = level.ToString();
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 
     public StatView CreateStatView()

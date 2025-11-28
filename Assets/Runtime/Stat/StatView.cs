@@ -16,8 +16,8 @@ public class StatView : MonoBehaviour
         _valueText.text = value.ToString();
     }
 
-    public void SetValue(string value)
+    public void Destroy()
     {
-        _valueText.text = value;
+        Destroy(gameObject);
     }
 }

@@ -2,15 +2,12 @@ public class EnchantmentTablePresenter
 {
     private CurrentItemModel _currentItem;
     private EnchantmentTableView _enchantmentTableView;
-
-    private ItemView _itemView;
     private ItemPresenter _itemPresenter;
 
-    public EnchantmentTablePresenter(CurrentItemModel currentItem, EnchantmentTableView enchantmentTableView, ItemView itemView)
+    public EnchantmentTablePresenter(CurrentItemModel currentItem, EnchantmentTableView enchantmentTableView)
     {
         _currentItem = currentItem;
         _enchantmentTableView = enchantmentTableView;
-        _itemView = itemView;
     }
 
     public void Enable()
@@ -46,7 +43,8 @@ public class EnchantmentTablePresenter
 
         if (item != null)
         {
-            _itemPresenter = new ItemPresenter(item, _itemView);
+            ItemView itemView = _enchantmentTableView.CreateItemView();
+            _itemPresenter = new ItemPresenter(item, itemView);
             _itemPresenter.Enable();
         }
     }
