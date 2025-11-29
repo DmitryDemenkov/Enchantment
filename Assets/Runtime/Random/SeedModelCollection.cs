@@ -8,13 +8,12 @@ public class SeedModelCollection
 
     public SeedModelCollection(Variant variant)
     {
-        var seedId = (ProxyObject)variant;
+        var seedsData = (ProxyObject)variant;
 
-        foreach (var pair in seedId)
+        foreach (var pair in seedsData)
         {
             ulong value = pair.Value;
-            if (value != 0)
-                Seeds[pair.Key] = new SeedModel(value);
+            Seeds[pair.Key] = new SeedModel(value);
         }
     }
 
@@ -22,12 +21,12 @@ public class SeedModelCollection
     {
         get
         {
-            if (!Seeds.TryGetValue(key, out var model))
+            if (!Seeds.ContainsKey(key))
             {
-                model = InitializeSeed();
+                var model = InitializeSeed();
                 Seeds[key] = model;
             }
-            return model;
+            return Seeds[key];
         }
     }
 

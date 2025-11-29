@@ -30,7 +30,7 @@ public class CurrentItemModel
 
     public void Change()
     {
-        var seed = _seedsModelCollection["seed1"].IncrementSeed(); // ID сида поменять
+        var seed = _seedsModelCollection["change_seed"].IncrementSeed();
         var random = new Random(seed);
         
         int randomIndex = random.Range(0, _itemDescriptionCollection.Items.Count);
@@ -54,7 +54,7 @@ public class CurrentItemModel
             return;
         }
 
-        var seed = _seedsModelCollection["seed2"].IncrementSeed(); // ID сида поменять
+        var seed = _seedsModelCollection["enchance_seed"].IncrementSeed();
         var random = new Random(seed);
 
         double chance = random.Chance();
