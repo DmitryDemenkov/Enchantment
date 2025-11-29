@@ -4,28 +4,32 @@ using TinyJSON;
 
 public class SeedModelCollection
 {
-    public Dictionary<string, SeedModel> Seeds { get; }
+    public Dictionary<string, SeedModel> Seeds { get; } = new();
 
     public SeedModelCollection(Variant variant)
     {
         var seedId = (ProxyObject)variant;
 
-        Seeds = new();
-        foreach (var seed in seedId)
+        foreach (var pair in seedId)
         {
-            if (seed.Value != 0)
-            {
-                Seeds.Add(seed.Key, new SeedModel(seed.Value));
-            }
-            else
-            {
-                InitializeSeed(seed.Key);
-            }
+            ulong value = pair.Value;
+            if (value != 0)
+                Seeds[pair.Key] = new SeedModel(value);
         }
     }
 
-    private void InitializeSeed(string seed)
+    public SeedModel this[string key]
     {
-        Seeds.Add(seed, new SeedModel((ulong)DateTime.UtcNow.Ticks));
+        get
+        {
+            if (!Seeds.TryGetValue(key, out var model))
+            {
+                model = InitializeSeed();
+                Seeds[key] = model;
+            }
+            return model;
+        }
     }
+
+    private SeedModel InitializeSeed() => new SeedModel((ulong)DateTime.UtcNow.Ticks);
 }
