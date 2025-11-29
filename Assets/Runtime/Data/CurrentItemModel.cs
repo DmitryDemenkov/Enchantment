@@ -8,24 +8,26 @@ public class CurrentItemModel
     public event Action<ItemModel> Changed;
     public event Action<EnchantmentResult> Enchanted;
 
-    public ItemModel Current { get; private set; }
+    public ItemModel Current { get; private set; } = null;
 
     private ItemDescriptionCollection _itemDescriptionCollection;
     private List<float> _chances;
 
     private SeedModelCollection _seedsModelCollection;
 
-    public CurrentItemModel(Variant variant, Descriptions descriptions, SeedModelCollection seeds)
+    public CurrentItemModel(Variant variant, Descriptions descriptions, SeedModelCollection seeds) : this(descriptions, seeds)
+    {
+        if (variant != null)
+        {
+            Current = new ItemModel(variant, _itemDescriptionCollection);
+        }
+    }
+
+    public CurrentItemModel(Descriptions descriptions, SeedModelCollection seeds)
     {
         _chances = descriptions.Chances;
         _seedsModelCollection = seeds;
         _itemDescriptionCollection = descriptions.Items;
-        Current = new ItemModel(variant, _itemDescriptionCollection);
-    }
-
-    public CurrentItemModel()
-    {
-        Current = null;
     }
 
     public void Change()
@@ -69,6 +71,15 @@ public class CurrentItemModel
             Changed?.Invoke(Current);
             Enchanted?.Invoke(EnchantmentResult.FAILURE);
         }
+    }
+
+    public string Serialize()
+    {
+        if (Current != null)
+        {
+            return Current.Serialize();
+        }
+        return "null";
     }
 }
 

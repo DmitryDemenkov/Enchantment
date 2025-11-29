@@ -8,4 +8,9 @@ public class SeedModel
     }
 
     public ulong IncrementSeed() => _seed++;
+
+    public string Serialize()
+    {
+        return _seed.ToString();
+    }
 }

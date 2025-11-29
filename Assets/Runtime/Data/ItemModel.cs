@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using TinyJSON;
 
 public class ItemModel
@@ -52,5 +53,17 @@ public class ItemModel
 
         Level++;
         LevelChanged?.Invoke(Level);
+    }
+
+    public string Serialize()
+    {
+        StringBuilder statsbuilder = new StringBuilder("{");
+        foreach(var stat in Stats)
+        {
+            statsbuilder = statsbuilder.Append($"{stat.Value.Serialize()},");
+        }
+        statsbuilder[^1] = '}';
+
+        return $"{{\"item\":\"{Item.Id}\",\"level\":{Level},\"stats\":{statsbuilder}}}";
     }
 }
