@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class Bootstrap : MonoBehaviour
@@ -7,19 +8,53 @@ public class Bootstrap : MonoBehaviour
 
     private EnchantmentTablePresenter _enchantmentTablePresenter;
     private ItemСreationPresenter _itemСreationPresenter;
-    private SaveStep _saveStep;
-    private LoadStep _loadStep;
+    private PlayerSaveStep _saveStep;
 
     private void Start()
     {
-        _loadStep = new LoadStep();
-        PlayerModel playerModel = _loadStep.LoadPlayerData();
+        PlayerModel playerModel = new PlayerModel();
+        var playerLoadStep = new PlayerLoadStep(playerModel);
+        playerLoadStep.Execute();
 
         _enchantmentTablePresenter = new EnchantmentTablePresenter(playerModel.CurrentItem, _enchantmentTableView);
         _itemСreationPresenter = new ItemСreationPresenter(_itemСreationView, playerModel.CurrentItem);
-        _saveStep = new SaveStep(playerModel);
+        _saveStep = new PlayerSaveStep(playerModel);
 
         _enchantmentTablePresenter.Enable();
         _itemСreationPresenter.Enable();
+
+        Application.quitting += OnQuit;
+
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+#endif
+    }
+
+#if UNITY_EDITOR
+    private void OnPlayModeStateChanged(PlayModeStateChange state)
+    {
+        if (state == PlayModeStateChange.ExitingPlayMode)
+        {
+            Dispose();
+        }
+    }
+#endif
+
+    private void OnQuit()
+    {
+        Dispose();
+    }
+
+    private void Dispose()
+    {
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+#endif
+        Application.quitting -= OnQuit;
+
+        _saveStep.Execute();
+
+        _itemСreationPresenter.Disable();
+        _enchantmentTablePresenter.Disable();
     }
 }
