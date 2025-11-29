@@ -35,7 +35,7 @@ public class CurrentItemModel
         var seed = _seedsModelCollection["change_seed"].IncrementSeed();
         var random = new Random(seed);
         
-        int randomIndex = random.Range(0, _itemDescriptionCollection.Items.Count);
+        int randomIndex = random.Range(0, _itemDescriptionCollection.Items.Count - 1);
         var itemDescription = _itemDescriptionCollection.Items.ElementAt(randomIndex).Value;
 
         Current = new ItemModel(itemDescription);
