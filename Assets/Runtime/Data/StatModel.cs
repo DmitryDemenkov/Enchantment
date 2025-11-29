@@ -18,5 +18,10 @@ public class StatModel
         Value += value;
         Changed?.Invoke(Value);
     }
+
+    public string Serialize()
+    {
+        return $"\"{Id}\":{Value}";
+    }
 }
 

@@ -2,17 +2,28 @@ using TinyJSON;
 
 public class PlayerModel
 {
-    public CurrentItemModel CurrentItem { get; }
-    public SeedModelCollection Seeds { get; }
+    public SeedModelCollection Seeds { get; private set; }
+    public CurrentItemModel CurrentItem { get; private set; }
 
-    public PlayerModel(Variant variant, Descriptions descriptions)
+    public PlayerModel()
+    {
+        CurrentItem = null;
+    }
+
+    public void SetData(Descriptions descriptions)
+    {
+        Seeds = new SeedModelCollection();
+        CurrentItem = new CurrentItemModel(descriptions, Seeds);
+    }
+
+    public void SetData(Variant variant, Descriptions descriptions)
     {
         Seeds = new SeedModelCollection(variant["seeds"]);
         CurrentItem = new CurrentItemModel(variant["current_item"], descriptions, Seeds);
     }
 
-    public PlayerModel()
+    public string Serialize()
     {
-        CurrentItem = new();
+        return $"{{\"current_item\":{CurrentItem.Serialize()},\"seeds\":{Seeds.Serialize()}}}";
     }
 }
