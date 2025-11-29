@@ -15,6 +15,8 @@ public class EnchantmentTablePresenter
         _currentItem.Changed += OnItemChanged;
         _currentItem.Enchanted += OnEnchanted;
         _enchantmentTableView.AddEnchanceClickedListener(OnEnchanceClicked);
+
+        OnItemChanged(_currentItem.Current);
     }
 
     public void Disable()
