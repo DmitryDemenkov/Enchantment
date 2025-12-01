@@ -18,17 +18,17 @@ MonoBehaviour:
   m_GUID: e2afb5815c7dae246a909e789ae4d884
   m_SerializeEntries:
   - m_GUID: 7f563aaa4e14e8f4cb830698523c2c55
-    m_Address: bow
+    m_Address: bow_icon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bee866ea2ec589743ac42e68d2c197dd
-    m_Address: magick_staff
+    m_Address: magick_staff_icon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5e5a523964470fd49927378af8414925
-    m_Address: sword
+    m_Address: sword_icon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

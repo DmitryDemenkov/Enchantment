@@ -16,7 +16,7 @@ public class ItemModel
     [Include][DecodeAlias("stats")][EncodeAlias("stats")]
     public Dictionary<string, StatModel> Stats { get; set; }
 
-    public ItemModel(Variant variant, ItemDescriptionCollection itemDescriptionCollection)
+    public ItemModel(Variant variant, DescriptionCollection<ItemDescription> itemDescriptionCollection)
     {
         string itemId = (string)variant["item"];
         Item = itemDescriptionCollection.Items[itemId];

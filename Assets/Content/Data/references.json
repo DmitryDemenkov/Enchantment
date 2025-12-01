@@ -58,5 +58,35 @@
         0.0023,
         0.0015,
         0.001
-    ]
+    ],
+    "views" : {
+        "item_views" :{
+            "bow" : {
+                "name" : "Bow",
+                "icon" : "bow_icon"
+            },
+            "sword" : {
+                "name" : "Sword",
+                "icon" : "sword_icon"
+            },
+            "magick_staff" : {
+                "name" : "Magic staff",
+                "icon" : "magick_staff_icon"
+            }
+        },
+        "stat_views" :{
+            "distance_attack" :{
+                "name" : "Distance",
+                "icon" : "distance_attack_icon"
+            },
+            "melee_attack" :{
+                "name" : "Melee",
+                "icon" : "melee_attack_icon"
+            },
+            "magic_attack" :{
+                "name" : "Magic",
+                "icon" : "magic_attack_icon"
+            }
+        }
+    }
 }

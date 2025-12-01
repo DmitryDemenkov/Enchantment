@@ -10,7 +10,7 @@ public class CurrentItemModel
 
     public ItemModel Current { get; private set; } = null;
 
-    private ItemDescriptionCollection _itemDescriptionCollection;
+    private DescriptionCollection<ItemDescription> _itemDescriptionCollection;
     private List<float> _chances;
 
     private SeedModelCollection _seedsModelCollection;

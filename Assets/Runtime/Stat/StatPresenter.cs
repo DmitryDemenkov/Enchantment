@@ -3,22 +3,25 @@ public class StatPresenter
     private readonly StatModel _statModel;
     private readonly StatView _statView;
     private AddressableIconProvider _addressableIconProvider;
+    private ViewDescriptions _viewDescriptions;
 
     private IconHandle _iconHandle;
     private int _iconLoadVersion;
 
-    public StatPresenter(StatModel statModel, StatView statView, AddressableIconProvider addressableIconProvider)
+    public StatPresenter(StatModel statModel, StatView statView, AddressableIconProvider addressableIconProvider, ViewDescriptions viewDescriptions)
     {
         _statModel = statModel;
         _statView = statView;
         _addressableIconProvider = addressableIconProvider;
+        _viewDescriptions = viewDescriptions;
     }
 
     public void Enable()
     {
         _statModel.Changed += OnStatChanged;
 
-        _statView.SetName(_statModel.Id);
+        var name = _viewDescriptions.StatViews[_statModel.Id].Name;
+        _statView.SetName(name);
         _statView.SetValue(_statModel.Value);
 
         _iconLoadVersion++;
@@ -43,7 +46,8 @@ public class StatPresenter
 
     private async void LoadIconAsync(int version)
     {
-        IconHandle handle = await _addressableIconProvider.LoadIconAsync(_statModel.Id);
+        var icon = _viewDescriptions.StatViews[_statModel.Id].Icon;
+        IconHandle handle = await _addressableIconProvider.LoadIconAsync(icon);
         
         if (version == _iconLoadVersion)
         {
