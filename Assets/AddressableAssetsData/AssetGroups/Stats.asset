@@ -18,17 +18,17 @@ MonoBehaviour:
   m_GUID: 3d42bce983bab7445837e0750c1487c8
   m_SerializeEntries:
   - m_GUID: a039f183facd49743b28badfe2018101
-    m_Address: distance_attack
+    m_Address: distance_attack_icon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7e9f314eae8958f499caf71d27e40ea6
-    m_Address: melee_attack
+    m_Address: melee_attack_icon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 18bd95beb000570489a3e5453d10eb0f
-    m_Address: magic_attack
+    m_Address: magic_attack_icon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
