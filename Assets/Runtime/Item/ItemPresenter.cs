@@ -6,15 +6,17 @@ public class ItemPresenter
     private ItemView _itemView;
     private List<StatPresenter> _statPresenters = new List<StatPresenter>();
     private AddressableIconProvider _addressableIconProvider;
+    private ViewDescriptions _viewDescriptions;
 
     private IconHandle _iconHandle;
     private int _iconLoadVersion;
 
-    public ItemPresenter(ItemModel model, ItemView view, AddressableIconProvider addressableIconProvider)
+    public ItemPresenter(ItemModel model, ItemView view, AddressableIconProvider addressableIconProvider, ViewDescriptions viewDescriptions)
     {
         _itemModel = model;
         _itemView = view;
         _addressableIconProvider = addressableIconProvider;
+        _viewDescriptions = viewDescriptions;
     }
 
     private void OnItemLevelChanged(int level)
@@ -26,7 +28,8 @@ public class ItemPresenter
     {
         _itemModel.LevelChanged += OnItemLevelChanged;
 
-        _itemView.UpdateInformation(_itemModel.Level, _itemModel.Item.Id);
+        var name = _viewDescriptions.ItemViews[_itemModel.Item.Id].Name;
+        _itemView.UpdateInformation(_itemModel.Level, name);
 
         _iconLoadVersion++;
         int currentVersion = _iconLoadVersion;
@@ -35,7 +38,7 @@ public class ItemPresenter
         foreach (var pair in _itemModel.Stats)
         {
             StatView statView = _itemView.CreateStatView();
-            var statPresenter = new StatPresenter(pair.Value, statView, _addressableIconProvider);
+            var statPresenter = new StatPresenter(pair.Value, statView, _addressableIconProvider, _viewDescriptions);
             statPresenter.Enable();
             _statPresenters.Add(statPresenter);
         }
@@ -64,7 +67,8 @@ public class ItemPresenter
 
     private async void LoadIconAsync(int version)
     {
-        IconHandle handle = await _addressableIconProvider.LoadIconAsync(_itemModel.Item.Id);
+        var icon = _viewDescriptions.ItemViews[_itemModel.Item.Id].Icon;
+        IconHandle handle = await _addressableIconProvider.LoadIconAsync(icon);
        
         if (version == _iconLoadVersion)
         {

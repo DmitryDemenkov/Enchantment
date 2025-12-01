@@ -28,7 +28,7 @@ public class Bootstrap : MonoBehaviour
         }
 
         _addressableIconProvider = new AddressableIconProvider();
-        _enchantmentTablePresenter = new EnchantmentTablePresenter(playerModel.CurrentItem, _enchantmentTableView, _addressableIconProvider);
+        _enchantmentTablePresenter = new EnchantmentTablePresenter(playerModel.CurrentItem, _enchantmentTableView, _addressableIconProvider, descriptions.ViewDescriptions);
         _itemСreationPresenter = new ItemСreationPresenter(_itemСreationView, playerModel.CurrentItem);
         _saveStep = new PlayerSaveStep(playerModel);
 
