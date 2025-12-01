@@ -4,24 +4,31 @@ using UnityEngine.UI;
 public class ItemView : MonoBehaviour
 {
     [SerializeField] private GridLayoutGroup _tableLayoutGroup;
+    [SerializeField] private Image _icon;
     [SerializeField] private StatView _statViewPrefab;
-    [SerializeField] private Text _typeTextPrefab;
-    [SerializeField] private Text _levelTextPrefab;
+    [SerializeField] private Text _typeText;
+    [SerializeField] private Text _levelText;
+    
 
     public void UpdateInformation(int level, string type)
     {
         UpdateLevel(level);
-        _typeTextPrefab.text = type;
+        _typeText.text = type;
     }
 
     public void UpdateLevel(int level)
     {
-        _levelTextPrefab.text = level.ToString();
+        _levelText.text = level.ToString();
     }
 
     public void Destroy()
     {
         Destroy(gameObject);
+    }
+
+    public void SetIcon(Sprite icon)
+    {
+        _icon.sprite = icon;
     }
 
     public StatView CreateStatView()

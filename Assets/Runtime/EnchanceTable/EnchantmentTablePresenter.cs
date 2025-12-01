@@ -3,11 +3,13 @@ public class EnchantmentTablePresenter
     private CurrentItemModel _currentItem;
     private EnchantmentTableView _enchantmentTableView;
     private ItemPresenter _itemPresenter;
+    private AddressableIconProvider _addressableIconProvider;
 
-    public EnchantmentTablePresenter(CurrentItemModel currentItem, EnchantmentTableView enchantmentTableView)
+    public EnchantmentTablePresenter(CurrentItemModel currentItem, EnchantmentTableView enchantmentTableView, AddressableIconProvider addressableIconProvider)
     {
         _currentItem = currentItem;
         _enchantmentTableView = enchantmentTableView;
+        _addressableIconProvider = addressableIconProvider;
     }
 
     public void Enable()
@@ -46,7 +48,7 @@ public class EnchantmentTablePresenter
         if (item != null)
         {
             ItemView itemView = _enchantmentTableView.CreateItemView();
-            _itemPresenter = new ItemPresenter(item, itemView);
+            _itemPresenter = new ItemPresenter(item, itemView, _addressableIconProvider);
             _itemPresenter.Enable();
         }
     }
