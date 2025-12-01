@@ -13,9 +13,19 @@ public class Bootstrap : MonoBehaviour
 
     private void Start()
     {
+        Descriptions descriptions = new Descriptions();
         PlayerModel playerModel = new PlayerModel();
-        var playerLoadStep = new PlayerLoadStep(playerModel);
-        playerLoadStep.Execute();
+
+        IStep[] loadSteps =
+        {
+            new DescriptionsLoadStep(descriptions),
+            new PlayerLoadStep(playerModel, descriptions)
+        };
+
+        foreach (var loadStep in loadSteps)
+        {
+            loadStep.Execute();
+        }
 
         _addressableIconProvider = new AddressableIconProvider();
         _enchantmentTablePresenter = new EnchantmentTablePresenter(playerModel.CurrentItem, _enchantmentTableView, _addressableIconProvider);
