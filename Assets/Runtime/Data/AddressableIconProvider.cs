@@ -7,25 +7,26 @@ public class AddressableIconProvider
 {
     public async Task<IconHandle> LoadIconAsync(string viewId)
     {
-        string address = viewId;
-        AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(address);
+        AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(viewId);
+        await handle.Task;
 
-        // Имитируем задержку сети
-        await Task.Delay(2000);
-
-        Sprite sprite = await handle.Task;
-        if (handle.Status == AsyncOperationStatus.Failed || sprite == null)
+        if (handle.Status == AsyncOperationStatus.Failed || handle.Result == null)
         {
+            Debug.LogError($"Failed to load icon {viewId}: {handle.OperationException}");
             Addressables.Release(handle);
+            //throw new Exception($"Failed to load icon {viewId}: {handle.OperationException}");
             return null;
         }
+
+        // Задержка для тестирования
+        await Task.Delay(2000);
 
         return new IconHandle(handle);
     }
 
     public void ReleaseIcon(IconHandle iconHandle)
     {
-        if (iconHandle.Handle.IsValid())
+        if (iconHandle?.Handle.IsValid() == true)
         {
             Addressables.Release(iconHandle.Handle);
         }
