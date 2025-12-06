@@ -1,5 +1,6 @@
 using Data.References;
 using System.IO;
+using System.Threading.Tasks;
 using TinyJSON;
 using UnityEngine;
 
@@ -14,10 +15,10 @@ namespace SaveLoad
             _descriptions = descriptions;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
             string descriptionsPath = DataPath() + "\\references.json";
-            string descriptionsJson = File.ReadAllText(descriptionsPath);
+            string descriptionsJson = await File.ReadAllTextAsync(descriptionsPath);
 
             var descriptionsJsonData = JSON.Load(descriptionsJson);
             _descriptions.SetData(descriptionsJsonData);

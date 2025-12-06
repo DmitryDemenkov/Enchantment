@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace SaveLoad
 {
     public interface IStep
     {
-        public void Execute();
+        public Task Execute();
     }
 }

@@ -4,6 +4,7 @@ using Data.References;
 using Enchantment.EnchanceTable;
 using Enchantment.ItemCreation;
 using SaveLoad;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ public class Bootstrap : MonoBehaviour
     private PlayerSaveStep _saveStep;
     private AddressableIconProvider _addressableIconProvider;
 
-    private void Start()
+    private async void Start()
     {
         Descriptions descriptions = new Descriptions();
         PlayerModel playerModel = new PlayerModel();
@@ -30,7 +31,7 @@ public class Bootstrap : MonoBehaviour
 
         foreach (var loadStep in loadSteps)
         {
-            loadStep.Execute();
+            await loadStep.Execute();
         }
 
         _addressableIconProvider = new AddressableIconProvider();
@@ -63,16 +64,18 @@ public class Bootstrap : MonoBehaviour
         Dispose();
     }
 
-    private void Dispose()
+    private async void Dispose()
     {
 #if UNITY_EDITOR
         EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 #endif
         Application.quitting -= OnQuit;
 
-        _saveStep.Execute();
+        Task saveTask = _saveStep.Execute();
 
         _itemСreationPresenter.Disable();
         _enchantmentTablePresenter.Disable();
+
+        await saveTask;
     }
 }

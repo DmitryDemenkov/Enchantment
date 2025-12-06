@@ -1,5 +1,6 @@
 using Data.Model;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SaveLoad
@@ -13,11 +14,12 @@ namespace SaveLoad
             _player = player;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
             string path = DataPath() + "\\player.json";
             string json = _player.Serialize();
-            File.WriteAllText(path, json);
+            await File.WriteAllTextAsync(path, json);
+            await Task.Delay(2000);
         }
 
         private string DataPath()

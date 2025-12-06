@@ -1,6 +1,7 @@
 using Data.Model;
 using Data.References;
 using System.IO;
+using System.Threading.Tasks;
 using TinyJSON;
 using UnityEngine;
 
@@ -17,12 +18,12 @@ namespace SaveLoad
             _descriptions = descriptions;
         }
 
-        public void Execute()
+        public async Task Execute()
         {
             string playerPath = DataPath() + "\\player.json";
             if (File.Exists(playerPath))
             {
-                string playerJson = File.ReadAllText(playerPath);
+                string playerJson = await File.ReadAllTextAsync(playerPath);
                 _player.SetData(JSON.Load(playerJson), _descriptions);
             }
             else
