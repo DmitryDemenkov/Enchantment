@@ -11,19 +11,10 @@ namespace Data.Model.Item
     {
         public event Action<int> LevelChanged;
 
-        [Include]
-        [DecodeAlias("item")]
-        [EncodeAlias("item")]
         public ItemDescription Item { get; private set; }
 
-        [Include]
-        [DecodeAlias("level")]
-        [EncodeAlias("level")]
         public int Level { get; private set; }
 
-        [Include]
-        [DecodeAlias("stats")]
-        [EncodeAlias("stats")]
         public Dictionary<string, StatModel> Stats { get; set; }
 
         public ItemModel(Variant variant, DescriptionCollection<ItemDescription> itemDescriptionCollection)
