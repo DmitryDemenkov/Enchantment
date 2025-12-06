@@ -16,7 +16,7 @@ public class Bootstrap : MonoBehaviour
     private EnchantmentTablePresenter _enchantmentTablePresenter;
     private ItemСreationPresenter _itemСreationPresenter;
     private PlayerSaveStep _saveStep;
-    private AddressableIconProvider _addressableIconProvider;
+    private AddressableModel _addressableIconProvider;
 
     private async void Start()
     {
@@ -34,7 +34,7 @@ public class Bootstrap : MonoBehaviour
             await loadStep.Execute();
         }
 
-        _addressableIconProvider = new AddressableIconProvider();
+        _addressableIconProvider = new AddressableModel();
         _enchantmentTablePresenter = new EnchantmentTablePresenter(playerModel.CurrentItem, _enchantmentTableView, _addressableIconProvider, descriptions.ViewDescriptions);
         _itemСreationPresenter = new ItemСreationPresenter(_itemСreationView, playerModel.CurrentItem);
         _saveStep = new PlayerSaveStep(playerModel);

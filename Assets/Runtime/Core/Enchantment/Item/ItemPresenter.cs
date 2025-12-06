@@ -3,6 +3,7 @@ using Data.Provider;
 using Data.References;
 using Enchantment.Stat;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Enchantment.Item
 {
@@ -11,13 +12,12 @@ namespace Enchantment.Item
         private ItemModel _itemModel;
         private ItemView _itemView;
         private List<StatPresenter> _statPresenters = new List<StatPresenter>();
-        private AddressableIconProvider _addressableIconProvider;
+        private AddressableModel _addressableIconProvider;
         private ViewDescriptions _viewDescriptions;
 
-        private IconHandle _iconHandle;
-        private int _iconLoadVersion;
+        private LoadModel<Sprite> _loadModel;
 
-        public ItemPresenter(ItemModel model, ItemView view, AddressableIconProvider addressableIconProvider, ViewDescriptions viewDescriptions)
+        public ItemPresenter(ItemModel model, ItemView view, AddressableModel addressableIconProvider, ViewDescriptions viewDescriptions)
         {
             _itemModel = model;
             _itemView = view;
@@ -30,16 +30,15 @@ namespace Enchantment.Item
             _itemView.UpdateLevel(level);
         }
 
-        public void Enable()
+        public async void Enable()
         {
             _itemModel.LevelChanged += OnItemLevelChanged;
 
             var name = _viewDescriptions.ItemViews[_itemModel.Item.Id].Name;
             _itemView.UpdateInformation(_itemModel.Level, name);
 
-            _iconLoadVersion++;
-            int currentVersion = _iconLoadVersion;
-            LoadIconAsync(currentVersion);
+            var icon = _viewDescriptions.ItemViews[_itemModel.Item.Id].Icon;
+            _loadModel = _addressableIconProvider.Load<Sprite>(icon);
 
             foreach (var pair in _itemModel.Stats)
             {
@@ -48,50 +47,23 @@ namespace Enchantment.Item
                 statPresenter.Enable();
                 _statPresenters.Add(statPresenter);
             }
+
+            await _loadModel.LoadAwaiter;
+            _itemView.SetIcon(_loadModel.Result);
         }
 
         public void Disable()
         {
+            _itemModel.LevelChanged -= OnItemLevelChanged;
+
             foreach (var statPresenter in _statPresenters)
             {
                 statPresenter.Disable();
             }
             _statPresenters.Clear();
 
-            _itemModel.LevelChanged -= OnItemLevelChanged;
-
-            _iconLoadVersion++;
-
-            if (_iconHandle != null)
-            {
-                _addressableIconProvider.ReleaseIcon(_iconHandle);
-                _iconHandle = null;
-            }
-
             _itemView.Destroy();
-        }
-
-        private async void LoadIconAsync(int version)
-        {
-            var icon = _viewDescriptions.ItemViews[_itemModel.Item.Id].Icon;
-            IconHandle handle = await _addressableIconProvider.LoadIconAsync(icon);
-
-            if (version == _iconLoadVersion)
-            {
-                _iconHandle = handle;
-
-                if (_iconHandle != null && _iconHandle.Sprite != null)
-                {
-                    _itemView.SetIcon(_iconHandle.Sprite);
-                }
-            }
-            else
-            {
-                if (handle != null)
-                {
-                    _addressableIconProvider.ReleaseIcon(handle);
-                }
-            }
+            // TODO _addressableIconProvider.Unload(_loadModel);
         }
     }
 }

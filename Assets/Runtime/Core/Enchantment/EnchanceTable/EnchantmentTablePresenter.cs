@@ -10,10 +10,10 @@ namespace Enchantment.EnchanceTable
         private CurrentItemModel _currentItem;
         private EnchantmentTableView _enchantmentTableView;
         private ItemPresenter _itemPresenter;
-        private AddressableIconProvider _addressableIconProvider;
+        private AddressableModel _addressableIconProvider;
         private ViewDescriptions _viewDescriptions;
 
-        public EnchantmentTablePresenter(CurrentItemModel currentItem, EnchantmentTableView enchantmentTableView, AddressableIconProvider addressableIconProvider, ViewDescriptions viewDescriptions)
+        public EnchantmentTablePresenter(CurrentItemModel currentItem, EnchantmentTableView enchantmentTableView, AddressableModel addressableIconProvider, ViewDescriptions viewDescriptions)
         {
             _currentItem = currentItem;
             _enchantmentTableView = enchantmentTableView;
