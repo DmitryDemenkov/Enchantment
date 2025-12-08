@@ -4,7 +4,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Data.Provider
 {
-    public class LoadPresenter<T>
+    public class LoadPresenter<T> : ILoadPresenter
     {
         private LoadModel<T> _loadModel;
         private AsyncOperationHandle<T> _handle;
@@ -22,7 +22,7 @@ namespace Data.Provider
 
         public void Disable()
         {
-            _loadModel.LoadAwaiter.Dispose();
+            _loadModel.DisposeLoad();
             _handle.Completed -= OnCompleted;
             Addressables.Release(_handle);
         }

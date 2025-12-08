@@ -40,7 +40,7 @@ namespace Enchantment.Stat
         {
             _statModel.Changed -= OnStatChanged;
             _statView.Destroy();
-            // TODO _addressableIconProvider.Unload(_loadModel);
+            _addressableIconProvider.Unload(_loadModel);
         }
 
         private void OnStatChanged(int value)

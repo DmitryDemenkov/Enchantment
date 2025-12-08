@@ -12,16 +12,16 @@ namespace Enchantment.Item
         private ItemModel _itemModel;
         private ItemView _itemView;
         private List<StatPresenter> _statPresenters = new List<StatPresenter>();
-        private AddressableModel _addressableIconProvider;
+        private AddressableModel _addressableModel;
         private ViewDescriptions _viewDescriptions;
 
         private LoadModel<Sprite> _loadModel;
 
-        public ItemPresenter(ItemModel model, ItemView view, AddressableModel addressableIconProvider, ViewDescriptions viewDescriptions)
+        public ItemPresenter(ItemModel model, ItemView view, AddressableModel addressableModel, ViewDescriptions viewDescriptions)
         {
             _itemModel = model;
             _itemView = view;
-            _addressableIconProvider = addressableIconProvider;
+            _addressableModel = addressableModel;
             _viewDescriptions = viewDescriptions;
         }
 
@@ -38,12 +38,12 @@ namespace Enchantment.Item
             _itemView.UpdateInformation(_itemModel.Level, name);
 
             var icon = _viewDescriptions.ItemViews[_itemModel.Item.Id].Icon;
-            _loadModel = _addressableIconProvider.Load<Sprite>(icon);
+            _loadModel = _addressableModel.Load<Sprite>(icon);
 
             foreach (var pair in _itemModel.Stats)
             {
                 StatView statView = _itemView.CreateStatView();
-                var statPresenter = new StatPresenter(pair.Value, statView, _addressableIconProvider, _viewDescriptions);
+                var statPresenter = new StatPresenter(pair.Value, statView, _addressableModel, _viewDescriptions);
                 statPresenter.Enable();
                 _statPresenters.Add(statPresenter);
             }
@@ -63,7 +63,7 @@ namespace Enchantment.Item
             _statPresenters.Clear();
 
             _itemView.Destroy();
-            // TODO _addressableIconProvider.Unload(_loadModel);
+            _addressableModel.Unload(_loadModel);
         }
     }
 }

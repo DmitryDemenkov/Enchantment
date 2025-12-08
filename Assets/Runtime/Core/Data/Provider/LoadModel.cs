@@ -2,7 +2,7 @@ using Awaiter;
 
 namespace Data.Provider
 {
-    public class LoadModel<T>
+    public class LoadModel<T> : ILoadModel
     {
         public CustomAwaiter LoadAwaiter { get; } = new CustomAwaiter();
 
@@ -14,10 +14,20 @@ namespace Data.Provider
         {
             Key = key;
         }
-                 
+
         public void CompleteLoad()
         {
             LoadAwaiter.Complete();
+        }
+
+        public void DisposeLoad()
+        {
+            LoadAwaiter.Dispose();
+        }
+
+        public ILoadPresenter CreatePresenter()
+        {
+            return new LoadPresenter<T>(this);
         }
     }
 }
