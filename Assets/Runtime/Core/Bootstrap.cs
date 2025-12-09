@@ -1,5 +1,5 @@
 using Data.Model;
-using Data.Provider;
+using Data.AsyncLoad;
 using Data.References;
 using Enchantment.EnchanceTable;
 using Enchantment.ItemCreation;
@@ -16,7 +16,9 @@ public class Bootstrap : MonoBehaviour
     private EnchantmentTablePresenter _enchantmentTablePresenter;
     private ItemСreationPresenter _itemСreationPresenter;
     private PlayerSaveStep _saveStep;
-    private AddressableIconProvider _addressableIconProvider;
+
+    private AddressablePresenter _addressablePresenter;
+    private AddressableModel _addressableModel;
 
     private async void Start()
     {
@@ -34,13 +36,18 @@ public class Bootstrap : MonoBehaviour
             await loadStep.Execute();
         }
 
-        _addressableIconProvider = new AddressableIconProvider();
-        _enchantmentTablePresenter = new EnchantmentTablePresenter(playerModel.CurrentItem, _enchantmentTableView, _addressableIconProvider, descriptions.ViewDescriptions);
+        _addressableModel = new AddressableModel();
+        _addressablePresenter = new AddressablePresenter(_addressableModel);
+
+        _enchantmentTablePresenter = new EnchantmentTablePresenter(playerModel.CurrentItem, _enchantmentTableView, _addressableModel, descriptions.ViewDescriptions);
         _itemСreationPresenter = new ItemСreationPresenter(_itemСreationView, playerModel.CurrentItem);
         _saveStep = new PlayerSaveStep(playerModel);
 
+        _addressablePresenter.Enable();
         _enchantmentTablePresenter.Enable();
         _itemСreationPresenter.Enable();
+
+        
 
         Application.quitting += OnQuit;
 
@@ -71,10 +78,11 @@ public class Bootstrap : MonoBehaviour
 #endif
         Application.quitting -= OnQuit;
 
-        Task saveTask = _saveStep.Execute();
+        Task saveTask = _saveStep.Execute();        
 
         _itemСreationPresenter.Disable();
         _enchantmentTablePresenter.Disable();
+        _addressablePresenter.Disable();
 
         await saveTask;
     }

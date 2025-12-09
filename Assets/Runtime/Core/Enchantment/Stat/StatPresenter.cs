@@ -1,6 +1,7 @@
 using Data.Model.Item;
-using Data.Provider;
+using Data.AsyncLoad;
 using Data.References;
+using UnityEngine;
 
 namespace Enchantment.Stat
 {
@@ -8,13 +9,12 @@ namespace Enchantment.Stat
     {
         private readonly StatModel _statModel;
         private readonly StatView _statView;
-        private AddressableIconProvider _addressableIconProvider;
+        private AddressableModel _addressableIconProvider;
         private ViewDescriptions _viewDescriptions;
 
-        private IconHandle _iconHandle;
-        private int _iconLoadVersion;
+        private LoadModel<Sprite> _loadModel;
 
-        public StatPresenter(StatModel statModel, StatView statView, AddressableIconProvider addressableIconProvider, ViewDescriptions viewDescriptions)
+        public StatPresenter(StatModel statModel, StatView statView, AddressableModel addressableIconProvider, ViewDescriptions viewDescriptions)
         {
             _statModel = statModel;
             _statView = statView;
@@ -22,7 +22,7 @@ namespace Enchantment.Stat
             _viewDescriptions = viewDescriptions;
         }
 
-        public void Enable()
+        public async void Enable()
         {
             _statModel.Changed += OnStatChanged;
 
@@ -30,47 +30,17 @@ namespace Enchantment.Stat
             _statView.SetName(name);
             _statView.SetValue(_statModel.Value);
 
-            _iconLoadVersion++;
-            int currentVersion = _iconLoadVersion;
-            LoadIconAsync(currentVersion);
+            var icon = _viewDescriptions.StatViews[_statModel.Id].Icon;
+            _loadModel = _addressableIconProvider.Load<Sprite>(icon);
+            await _loadModel.LoadAwaiter;
+            _statView.SetIcon(_loadModel.Result);
         }
 
         public void Disable()
         {
             _statModel.Changed -= OnStatChanged;
-
-            _iconLoadVersion++;
-
-            if (_iconHandle != null)
-            {
-                _addressableIconProvider.ReleaseIcon(_iconHandle);
-                _iconHandle = null;
-            }
-
             _statView.Destroy();
-        }
-
-        private async void LoadIconAsync(int version)
-        {
-            var icon = _viewDescriptions.StatViews[_statModel.Id].Icon;
-            IconHandle handle = await _addressableIconProvider.LoadIconAsync(icon);
-
-            if (version == _iconLoadVersion)
-            {
-                _iconHandle = handle;
-
-                if (_iconHandle != null && _iconHandle.Sprite != null)
-                {
-                    _statView.SetIcon(_iconHandle.Sprite);
-                }
-            }
-            else
-            {
-                if (handle != null)
-                {
-                    _addressableIconProvider.ReleaseIcon(handle);
-                }
-            }
+            _addressableIconProvider.Unload(_loadModel);
         }
 
         private void OnStatChanged(int value)
