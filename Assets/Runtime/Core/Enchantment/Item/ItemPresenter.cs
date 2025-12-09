@@ -1,5 +1,5 @@
 using Data.Model.Item;
-using Data.Provider;
+using Data.AsyncLoad;
 using Data.References;
 using Enchantment.Stat;
 using System.Collections.Generic;

@@ -1,6 +1,6 @@
 using Awaiter;
 
-namespace Data.Provider
+namespace Data.AsyncLoad
 {
     public interface ILoadModel
     {

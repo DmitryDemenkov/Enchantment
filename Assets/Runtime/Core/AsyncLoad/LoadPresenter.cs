@@ -2,7 +2,7 @@ using System;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Data.Provider
+namespace Data.AsyncLoad
 {
     public class LoadPresenter<T> : ILoadPresenter
     {

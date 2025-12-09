@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Data.Provider
+namespace Data.AsyncLoad
 {
     public class AddressablePresenter
     {

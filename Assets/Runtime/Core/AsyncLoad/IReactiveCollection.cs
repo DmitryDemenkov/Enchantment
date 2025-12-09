@@ -1,6 +1,6 @@
 using System;
 
-namespace Data.Provider
+namespace Data.AsyncLoad
 {
     public interface IReactiveCollection<out T>
     {
